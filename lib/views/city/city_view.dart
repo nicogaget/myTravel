@@ -3,10 +3,10 @@ import '../../views/city/widgets/activity_list.dart';
 import '../../views/city/widgets/trip_activity_List.dart';
 import '../../views/city/widgets/trip_overview.dart';
 import '../../datas/data.dart' as data;
-import '../../models/activity.model.dart';
-import '../../models/trip.model.dart';
+import '../../models/activity_model.dart';
+import '../../models/trip_model.dart';
 
-class City extends StatefulWidget {
+class CityView extends StatefulWidget {
   final List<Activity> activities = data.activities;
 
   showContext({required BuildContext context, required List<Widget> children}) {
@@ -23,14 +23,14 @@ class City extends StatefulWidget {
     }
   }
 
-  City({super.key});
+  CityView({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _CityState createState() => _CityState();
+  _CityViewState createState() => _CityViewState();
 }
 
-class _CityState extends State<City> with WidgetsBindingObserver {
+class _CityViewState extends State<CityView> with WidgetsBindingObserver {
   late Trip myTrip;
   late int index;
 

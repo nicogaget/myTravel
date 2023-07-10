@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_travel/views/city/city.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:my_travel/views/home/home_view.dart';
 
 void main() {
   runApp(const MyTravel());
@@ -11,17 +12,17 @@ class MyTravel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
-      supportedLocales: const [
+      supportedLocales: [
         Locale('fr', 'FR'),
         Locale('en', 'US'), // American English
         // Israeli Hebrew
         // ...
       ],
       debugShowCheckedModeBanner: false,
-      //home: Home(),
-      home: City(),
+      home: HomeView(),
+      //home: City(),
     );
   }
 }

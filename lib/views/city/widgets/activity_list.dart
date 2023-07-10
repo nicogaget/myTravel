@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../models/activity.model.dart';
+import '../../../models/activity_model.dart';
 import 'activity_card.dart';
 
 class ActivityList extends StatelessWidget {

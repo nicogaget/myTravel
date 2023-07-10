@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../models/activity.model.dart';
+import '../../../models/activity_model.dart';
 
 class TripActivityList extends StatelessWidget {
   final List<Activity> activities;

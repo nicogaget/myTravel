@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../models/trip.model.dart';
+import '../../../models/trip_model.dart';
 
 class TripOverview extends StatelessWidget {
   final VoidCallback setDate;
