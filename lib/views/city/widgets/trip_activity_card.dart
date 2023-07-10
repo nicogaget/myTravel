@@ -40,7 +40,7 @@ class _TripActivityCardState extends State<TripActivityCard> {
       ),
       title: Text(
         widget.activity.name,
-        style: TextStyle(color: color),
+        style: Theme.of(context).textTheme.headlineSmall,
       ),
       subtitle: Text(widget.activity.city),
       trailing: IconButton(

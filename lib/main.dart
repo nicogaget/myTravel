@@ -13,6 +13,16 @@ class MyTravel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        theme: ThemeData(
+            primarySwatch: Colors.red,
+            appBarTheme: const AppBarTheme(
+              titleTextStyle: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            textTheme:
+                const TextTheme(headlineSmall: TextStyle(color: Colors.green))),
         localizationsDelegates: GlobalMaterialLocalizations.delegates,
         supportedLocales: const [
           Locale('fr', 'FR'),
