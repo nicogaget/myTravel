@@ -1,4 +1,6 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:my_travel/views/city/widgets/trip_activity_card.dart';
 
 import '../../../models/activity.model.dart';
 
@@ -13,28 +15,14 @@ class TripActivityList extends StatelessWidget {
   Widget build(BuildContext context) {
     // ignore: avoid_unnecessary_containers
     return Container(
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-          var activity = activities[index];
-          return Card(
-              child: ListTile(
-            leading: CircleAvatar(
-              backgroundImage: AssetImage(activity.image),
-            ),
-            title: Text(activity.name),
-            subtitle: Text(activity.city),
-            trailing: IconButton(
-              icon: const Icon(
-                Icons.delete,
-                color: Colors.red,
-              ),
-              onPressed: () {
-                deleteTripActivity(activity.id);
-              },
-            ),
-          ));
-        },
-        itemCount: activities.length,
+      child: ListView(
+        children: activities
+            .map((activity) => TripActivityCard(
+                  key: ValueKey(activity.id),
+                  activity: activity,
+                  deleteTripActivity: deleteTripActivity,
+                ))
+            .toList(),
       ),
     );
   }

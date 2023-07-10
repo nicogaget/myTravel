@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_travel/views/city/widgets/activity_list.dart';
-import 'package:my_travel/views/city/widgets/trip_activity_List.dart';
-import 'package:my_travel/views/city/widgets/trip_overview.dart';
+import '../../views/city/widgets/activity_list.dart';
+import '../../views/city/widgets/trip_activity_List.dart';
+import '../../views/city/widgets/trip_overview.dart';
+import '../../widgets/data.dart';
 import '../../datas/data.dart' as data;
 import '../../models/activity.model.dart';
 import '../../models/trip.model.dart';
@@ -12,12 +13,14 @@ class City extends StatefulWidget {
   City({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _CityState createState() => _CityState();
 }
 
 class _CityState extends State<City> {
   late Trip myTrip;
   late int index;
+  late List<Activity> activities;
 
   @override
   void initState() {
@@ -26,8 +29,14 @@ class _CityState extends State<City> {
     myTrip = Trip(activities: [], city: 'Lyon', date: null);
   }
 
+  @override
+  didChangeDependencies() {
+    super.didChangeDependencies();
+    activities = Data.of(context).activities;
+  }
+
   List<Activity> get tripActivities {
-    return widget.activities
+    return activities
         .where((activity) => myTrip.activities.contains(activity.id))
         .toList();
   }
@@ -70,7 +79,6 @@ class _CityState extends State<City> {
 
   @override
   Widget build(BuildContext context) {
-    print('build');
     return Scaffold(
       appBar: AppBar(
         leading: const Icon(Icons.chevron_left),
@@ -90,7 +98,7 @@ class _CityState extends State<City> {
             Expanded(
                 child: index == 0
                     ? ActivityList(
-                        activities: widget.activities,
+                        activities: activities,
                         selectedActivities: myTrip.activities,
                         toggleActivity: toggleActivity)
                     : TripActivityList(

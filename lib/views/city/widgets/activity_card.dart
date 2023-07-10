@@ -15,7 +15,7 @@ class ActivityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         height: 150,
         //margin: const EdgeInsets.all(1),
         child: Stack(
@@ -29,7 +29,7 @@ class ActivityCard extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 children: <Widget>[
                   Expanded(

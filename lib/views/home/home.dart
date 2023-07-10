@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:my_travel/views/home/widgets/city.dart';
 
 class Home extends StatefulWidget {
+  const Home({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _HomeState createState() {
     return _HomeState();
   }
