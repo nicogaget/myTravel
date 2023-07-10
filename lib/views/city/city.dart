@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:my_travel/views/city/widgets/activity_list.dart';
 import 'package:my_travel/views/city/widgets/trip_activity_List.dart';
 import 'package:my_travel/views/city/widgets/trip_overview.dart';
@@ -10,23 +9,27 @@ import '../../models/trip.model.dart';
 class City extends StatefulWidget {
   final List<Activity> activities = data.activities;
 
-  City({super.key}) {
-    print('constructor widget');
-  }
+  City({super.key});
 
   @override
   _CityState createState() => _CityState();
 }
 
 class _CityState extends State<City> {
-  late Trip trip;
+  late Trip myTrip;
   late int index;
 
   @override
   void initState() {
     super.initState();
     index = 0;
-    trip = Trip(activities: [], city: 'Lyon', date: null);
+    myTrip = Trip(activities: [], city: 'Lyon', date: null);
+  }
+
+  List<Activity> get tripActivities {
+    return widget.activities
+        .where((activity) => myTrip.activities.contains(activity.id))
+        .toList();
   }
 
   void setDate() {
@@ -39,15 +42,29 @@ class _CityState extends State<City> {
     ).then((newDate) {
       if (newDate != null) {
         setState(() {
-          trip.date = newDate;
+          myTrip.date = newDate;
         });
       }
+    });
+  }
+
+  void toggleActivity(String id) {
+    setState(() {
+      myTrip.activities.contains(id)
+          ? myTrip.activities.remove(id)
+          : myTrip.activities.add(id);
     });
   }
 
   void switchIndex(newIndex) {
     setState(() {
       index = newIndex;
+    });
+  }
+
+  void deleteTripActivity(String id) {
+    setState(() {
+      myTrip.activities.remove(id);
     });
   }
 
@@ -68,12 +85,17 @@ class _CityState extends State<City> {
           children: <Widget>[
             TripOverview(
               setDate: setDate,
-              trip: trip,
+              trip: myTrip,
             ),
             Expanded(
                 child: index == 0
-                    ? ActivityList(activities: widget.activities)
-                    : const TripActivityList()),
+                    ? ActivityList(
+                        activities: widget.activities,
+                        selectedActivities: myTrip.activities,
+                        toggleActivity: toggleActivity)
+                    : TripActivityList(
+                        activities: tripActivities,
+                        deleteTripActivity: deleteTripActivity)),
           ],
         ),
 
