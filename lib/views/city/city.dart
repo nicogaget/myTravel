@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:my_travel/views/city/widgets/activity_list.dart';
-import 'package:my_travel/views/city/widgets/trip_activity_List.dart';
-import 'package:my_travel/views/city/widgets/trip_overview.dart';
+import '../../views/city/widgets/activity_list.dart';
+import '../../views/city/widgets/trip_activity_List.dart';
+import '../../views/city/widgets/trip_overview.dart';
 import '../../datas/data.dart' as data;
 import '../../models/activity.model.dart';
 import '../../models/trip.model.dart';
 
 class City extends StatefulWidget {
   final List<Activity> activities = data.activities;
+
+  showContext({required BuildContext context, required List<Widget> children}) {
+    var orientation = MediaQuery.of(context).orientation;
+    if (orientation == Orientation.landscape) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: children,
+      );
+    } else {
+      return Column(
+        children: children,
+      );
+    }
+  }
 
   City({super.key});
 
@@ -70,7 +84,6 @@ class _CityState extends State<City> {
 
   @override
   Widget build(BuildContext context) {
-    print('build');
     return Scaffold(
       appBar: AppBar(
         leading: const Icon(Icons.chevron_left),
@@ -81,57 +94,26 @@ class _CityState extends State<City> {
       ),
       body: Container(
         //padding: const EdgeInsets.all(10),
-        child: Column(
+        child: widget.showContext(
+          context: context,
           children: <Widget>[
             TripOverview(
               setDate: setDate,
               trip: myTrip,
             ),
             Expanded(
-                child: index == 0
-                    ? ActivityList(
-                        activities: widget.activities,
-                        selectedActivities: myTrip.activities,
-                        toggleActivity: toggleActivity)
-                    : TripActivityList(
-                        activities: tripActivities,
-                        deleteTripActivity: deleteTripActivity)),
+              child: index == 0
+                  ? ActivityList(
+                      activities: widget.activities,
+                      selectedActivities: myTrip.activities,
+                      toggleActivity: toggleActivity)
+                  : TripActivityList(
+                      activities: tripActivities,
+                      deleteTripActivity: deleteTripActivity,
+                    ),
+            ),
           ],
         ),
-
-        /*child: GridView(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2),
-          children: widget.activities
-              .map((activity) => ActivityCard(activity: activity))
-              .toList(),
-        ),*/
-        /*child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2),
-          itemBuilder: (context, index) {
-            return ActivityCard(activity: widget.activities[index]);
-          },
-          itemCount: widget.activities.length,
-        ),*/
-        /*child: ListView.separated(
-          itemBuilder: (context, index) {
-            return ActivityCard(activity: widget.activities[index]);
-          },
-          itemCount: widget.activities.length,
-          separatorBuilder: (context, index) {
-            //return Divider();
-            return SizedBox(
-              height: 5,
-            );
-          },
-        ),*/
-        /*child: ListView.builder(
-          itemBuilder: (context, index) {
-            return ActivityCard(activity: widget.activities[index]);
-          },
-          itemCount: widget.activities.length,
-        ),*/
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: index,
