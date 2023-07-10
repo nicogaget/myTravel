@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../views/home/widgets/city.dart';
+import 'widgets/city_card.dart';
 
 import '../../models/city_model.dart';
 

@@ -5,6 +5,7 @@ import '../../views/city/widgets/trip_overview.dart';
 import '../../datas/data.dart' as data;
 import '../../models/activity_model.dart';
 import '../../models/trip_model.dart';
+import '../../models/city_model.dart';
 
 class CityView extends StatefulWidget {
   final List<Activity> activities = data.activities;
@@ -97,9 +98,14 @@ class _CityViewState extends State<CityView> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    final City city = ModalRoute.of(context)!.settings.arguments as City;
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(Icons.chevron_left),
+        leading: IconButton(
+            icon: const Icon(Icons.chevron_left),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
         title: const Text('Organisation Voyage'),
         actions: const <Widget>[
           Icon(Icons.more_vert),
@@ -111,6 +117,7 @@ class _CityViewState extends State<CityView> with WidgetsBindingObserver {
           context: context,
           children: <Widget>[
             TripOverview(
+              cityName: city.name,
               setDate: setDate,
               trip: myTrip,
             ),
