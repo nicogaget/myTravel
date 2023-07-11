@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_travel/views/city/city_view.dart';
 
 import '../../../models/city_model.dart';
 

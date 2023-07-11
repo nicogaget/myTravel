@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 //import 'package:my_travel/views/city/city_view.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:my_travel/views/city/city_view.dart';
-import 'package:my_travel/views/home/home_view.dart';
+import '../../views/city/city_view.dart';
+import '../../views/home/home_view.dart';
+
+import '../../models/city_model.dart';
 
 void main() {
   runApp(const MyTravel());
@@ -24,14 +26,17 @@ class MyTravel extends StatelessWidget {
       //home: HomeView(),
       //initialRoute: '/city',
       routes: {
-        '/': (context) {
-          return const HomeView();
-        },
-        '/city': (context) {
-          return CityView();
-        }
+        '/': (context) => const HomeView(),
       },
-      //home: CityView(),
+      onGenerateRoute: (settings) {
+        if (settings.name == '/city') {
+          final City city = settings.arguments as City;
+          return MaterialPageRoute(builder: (context) {
+            return CityView(city: city);
+          });
+        }
+        return null;
+      },
     );
   }
 }

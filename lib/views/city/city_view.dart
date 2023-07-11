@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../views/city/widgets/activity_list.dart';
-import '../../views/city/widgets/trip_activity_List.dart';
+import 'widgets/trip_activity_list.dart';
 import '../../views/city/widgets/trip_overview.dart';
 import '../../datas/data.dart' as data;
 import '../../models/activity_model.dart';
@@ -9,6 +9,9 @@ import '../../models/city_model.dart';
 
 class CityView extends StatefulWidget {
   final List<Activity> activities = data.activities;
+  final City city;
+
+  CityView({super.key, required this.city});
 
   showContext({required BuildContext context, required List<Widget> children}) {
     var orientation = MediaQuery.of(context).orientation;
@@ -24,16 +27,14 @@ class CityView extends StatefulWidget {
     }
   }
 
-  CityView({super.key});
-
   @override
-  // ignore: library_private_types_in_public_api
   _CityViewState createState() => _CityViewState();
 }
 
 class _CityViewState extends State<CityView> with WidgetsBindingObserver {
   late Trip myTrip;
   late int index;
+  late List<Activity> activities;
 
   @override
   void initState() {
@@ -47,11 +48,6 @@ class _CityViewState extends State<CityView> with WidgetsBindingObserver {
     return widget.activities
         .where((activity) => myTrip.activities.contains(activity.id))
         .toList();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
   }
 
   @override
@@ -98,7 +94,6 @@ class _CityViewState extends State<CityView> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    final City city = ModalRoute.of(context)!.settings.arguments as City;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -117,7 +112,7 @@ class _CityViewState extends State<CityView> with WidgetsBindingObserver {
           context: context,
           children: <Widget>[
             TripOverview(
-              cityName: city.name,
+              cityName: widget.city.name,
               setDate: setDate,
               trip: myTrip,
             ),
